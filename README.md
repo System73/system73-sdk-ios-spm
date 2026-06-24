@@ -9,12 +9,18 @@ macOS is currently not supported.
 
 ## Requirements
 
--   Xcode 26.2 or newer
+-   Xcode 26.5 or newer
 -   Swift 6.2 or newer
 -   iOS deployment target 13.0 or greater
 -   tvOS deployment target 13.0 or greater
 
-The SDK is compiled using Swift 6.2.3.
+The SDK is compiled using Swift 6.3.2.
+
+### Build Environment
+
+This release was built and validated using:
+- Xcode 26.5
+- Swift 6.3.2
 
 ## Installation
 

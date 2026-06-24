@@ -24,8 +24,8 @@ let package = Package(
         targets: [
             .binaryTarget(
                 name: "PolyNetSDK",
-                url:"https://artifacts.s73cloud.com/repository/maven-s73-releases/s73-polynet-plat/polynet-apple-sdk/5.2.2/polynet-apple-sdk-5.2.2.zip",
-                checksum:"3cc60b1ea903140aa38d5da8beb313817492ac02692bf799a817d808ecf6f141"
+                url:"https://artifacts.s73cloud.com/repository/maven-s73-releases/s73-polynet-plat/polynet-apple-sdk/5.2.3/polynet-apple-sdk-5.2.3.zip",
+                checksum:"baeb71e53e352c388df6e66bf2e32264e380efcf84306d1a3c3945ff075d5560"
             ),
             .binaryTarget(
                 name: "Starscream",
