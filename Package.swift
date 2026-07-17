@@ -30,8 +30,8 @@ let package = Package(
 
         .binaryTarget(
             name: "PolyNetSDK",
-            url: "https://artifacts.s73cloud.com/repository/maven-s73-releases/s73-polynet-plat/polynet-apple-sdk/5.2.3/polynet-apple-sdk-5.2.3.zip",
-            checksum: "baeb71e53e352c388df6e66bf2e32264e380efcf84306d1a3c3945ff075d5560"
+            url: "https://artifacts.s73cloud.com/repository/maven-s73-releases/s73-polynet-plat/polynet-apple-sdk/5.2.4/polynet-apple-sdk-5.2.4.zip",
+            checksum: "6746b437be19dfa886546adfccb150899be06f607f8bc2cfe22262df0685b019"
         ),
 
             .target(
