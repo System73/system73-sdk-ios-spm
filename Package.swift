@@ -1,6 +1,8 @@
 // swift-tools-version: 6.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
+// swift-tools-version: 6.2
+
 import PackageDescription
 
 let package = Package(
@@ -14,6 +16,14 @@ let package = Package(
     ],
 
     dependencies: [
+        .package(
+            url: "https://github.com/daltoniam/Starscream.git",
+            from: "4.0.8"
+        ),
+        .package(
+            url: "https://github.com/apple/swift-protobuf.git",
+            from: "1.26.0"
+        ),
         .package(
             url: "https://github.com/System73/system73-webrtc-ios-spm.git",
             from: "1.0.0"
@@ -32,38 +42,24 @@ let package = Package(
             checksum: "baeb71e53e352c388df6e66bf2e32264e380efcf84306d1a3c3945ff075d5560"
         ),
 
-        .binaryTarget(
-            name: "Starscream",
-            url: "https://artifacts.s73cloud.com/repository/maven-s73-releases/s73-polynet-plat/polynet-ios-starscream-xcframework/4.0.8.24.06.2026/polynet-ios-starscream-xcframework-4.0.8.24.06.2026.zip",
-            checksum: "71a19787d1a32c6098a3563fb9871c38187143d1a43eb833b73817360c0430d9"
-        ),
-
-        .binaryTarget(
-            name: "SwiftProtobuf",
-            url: "https://artifacts.s73cloud.com/repository/maven-s73-releases/s73-polynet-plat/polynet-ios-swift-protobuf-xcframework/1.26.0.24.06.2026/polynet-ios-swift-protobuf-xcframework-1.26.0.24.06.2026.zip",
-            checksum: "5bd333b5914291114d56171372fde48fddc2db0e1c5ea891ba713f68b9763e01"
-        ),
-
-        .target(
-            name: "PolyNetSDKWrapper",
-            dependencies: [
-                "PolyNetSDK",
-                "Starscream",
-                "SwiftProtobuf",
-
-                .product(
-                    name: "WebRTC_iOS",
-                    package: "system73-webrtc-ios-spm",
-                    condition: .when(platforms: [.iOS])
-                ),
-
-                .product(
-                    name: "WebRTCtvOS",
-                    package: "system73-webrtc-tvos-spm",
-                    condition: .when(platforms: [.tvOS])
-                )
-            ],
-            path: "Sources/system73-sdk-ios-spm"
-        )
+            .target(
+                name: "PolyNetSDKWrapper",
+                dependencies: [
+                    "PolyNetSDK",
+                    .product(name: "Starscream", package: "Starscream"),
+                    .product(name: "SwiftProtobuf", package: "swift-protobuf"),
+                    .product(
+                        name: "WebRTC_iOS",
+                        package: "system73-webrtc-ios-spm",
+                        condition: .when(platforms: [.iOS])
+                    ),
+                    .product(
+                        name: "WebRTCtvOS",
+                        package: "system73-webrtc-tvos-spm",
+                        condition: .when(platforms: [.tvOS])
+                    )
+                ],
+                path: "Sources/system73-sdk-ios-spm"
+            )
     ]
 )
