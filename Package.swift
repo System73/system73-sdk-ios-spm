@@ -23,14 +23,6 @@ let package = Package(
         .package(
             url: "https://github.com/apple/swift-protobuf.git",
             from: "1.26.0"
-        ),
-        .package(
-            url: "https://github.com/System73/system73-webrtc-ios-spm.git",
-            from: "1.0.0"
-        ),
-        .package(
-            url: "https://github.com/System73/system73-webrtc-tvos-spm.git",
-            from: "1.0.0"
         )
     ],
 
@@ -38,8 +30,8 @@ let package = Package(
 
         .binaryTarget(
             name: "PolyNetSDK",
-            url: "https://artifacts.s73cloud.com/repository/maven-s73-releases/s73-polynet-plat/polynet-apple-sdk/5.2.3/polynet-apple-sdk-5.2.3.zip",
-            checksum: "baeb71e53e352c388df6e66bf2e32264e380efcf84306d1a3c3945ff075d5560"
+            url: "https://artifacts.s73cloud.com/repository/maven-s73-releases/s73-polynet-plat/polynet-apple-sdk/5.2.4/polynet-apple-sdk-5.2.4.zip",
+            checksum: "6746b437be19dfa886546adfccb150899be06f607f8bc2cfe22262df0685b019"
         ),
 
             .target(
@@ -47,17 +39,7 @@ let package = Package(
                 dependencies: [
                     "PolyNetSDK",
                     .product(name: "Starscream", package: "Starscream"),
-                    .product(name: "SwiftProtobuf", package: "swift-protobuf"),
-                    .product(
-                        name: "WebRTC_iOS",
-                        package: "system73-webrtc-ios-spm",
-                        condition: .when(platforms: [.iOS])
-                    ),
-                    .product(
-                        name: "WebRTCtvOS",
-                        package: "system73-webrtc-tvos-spm",
-                        condition: .when(platforms: [.tvOS])
-                    )
+                    .product(name: "SwiftProtobuf", package: "swift-protobuf")
                 ],
                 path: "Sources/system73-sdk-ios-spm"
             )
