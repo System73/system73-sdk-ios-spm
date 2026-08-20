@@ -83,7 +83,6 @@ The package includes the following frameworks:
 
 -   PolyNetSDK (Core SDK)
 -   WebRTC (Real-time communication)
--   Starscream (WebSocket support)
 -   SwiftProtobuf (Protocol serialization)
 
 No additional setup is required.After importing the package, all SDK features and bundled frameworks
