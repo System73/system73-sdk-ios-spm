@@ -41,7 +41,7 @@ https://github.com/System73/system73-sdk-ios-spm.git
    <img src="assets/2.png" width="600" alt="Repo Steps" />
   </p>
   
-5. Next, set the ```Dependency Rule``` to be ```Up to Next Major Version```.
+5. Next, set the ```Dependency Rule``` to be ```Up to Next Major Version``` or choose ```Exact Version``` and select specific version.
 6.  Add the package to your app target
   <p align="left">
    <img src="assets/addtarget.png" width="600" alt="Add Steps" />
