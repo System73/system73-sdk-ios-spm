@@ -17,10 +17,6 @@ let package = Package(
 
     dependencies: [
         .package(
-            url: "https://github.com/daltoniam/Starscream.git",
-            from: "4.0.8"
-        ),
-        .package(
             url: "https://github.com/apple/swift-protobuf.git",
             from: "1.26.0"
         )
@@ -30,15 +26,14 @@ let package = Package(
 
         .binaryTarget(
             name: "PolyNetSDK",
-            url: "https://artifacts.s73cloud.com/repository/maven-s73-releases/s73-polynet-plat/polynet-apple-sdk/5.2.4/polynet-apple-sdk-5.2.4.zip",
-            checksum: "6746b437be19dfa886546adfccb150899be06f607f8bc2cfe22262df0685b019"
+            url: "https://artifacts.s73cloud.com/repository/maven-s73-releases/s73-polynet-plat/polynet-apple-sdk/5.2.5/polynet-apple-sdk-5.2.5.zip",
+            checksum: "07f11129bc63873a214628c2a007a0f8913c1058b8147d6c8d9eba1edd2be092"
         ),
 
             .target(
                 name: "PolyNetSDKWrapper",
                 dependencies: [
                     "PolyNetSDK",
-                    .product(name: "Starscream", package: "Starscream"),
                     .product(name: "SwiftProtobuf", package: "swift-protobuf")
                 ],
                 path: "Sources/system73-sdk-ios-spm"
