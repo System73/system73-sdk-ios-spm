@@ -85,7 +85,7 @@ The package includes the following frameworks:
 -   WebRTC (Real-time communication)
 -   SwiftProtobuf (Protocol serialization)
 
-No additional setup is required.After importing the package, all SDK features and bundled frameworks
+No additional setup is required. After importing the package, all SDK features and bundled frameworks
 become automatically available.
 
 ## Architecture Support
