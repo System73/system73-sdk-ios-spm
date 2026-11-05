@@ -1,10 +1,14 @@
-
- // swift-tools-version: 6.0
+// swift-tools-version: 6.0
 
 import PackageDescription
 
 let package = Package(
     name: "system73-sdk-ios-spm",
+
+    platforms: [
+        .iOS(.v15),     // change to your real minimum versions
+        .tvOS(.v15)
+    ],
 
     products: [
         .library(
@@ -13,15 +17,19 @@ let package = Package(
         )
     ],
 
-    // SwiftProtobuf is intentionally excluded.
-    // It will be managed externally by the client application.
-    //
-    // dependencies: [
-    //     .package(
-    //         url: "https://github.com/apple/swift-protobuf.git",
-    //         from: "1.26.0"
-    //     )
-    // ],
+    dependencies: [
+        .package(
+            url: "https://github.com/System73/system73-webrtc-ios-spm.git",
+            exact: "1.0.1"
+        ),
+        .package(
+            url: "https://github.com/System73/system73-webrtc-tvos-spm.git",
+            exact: "1.0.1"
+        )
+
+        // SwiftProtobuf is intentionally excluded.
+        // It will be managed externally by the client application.
+    ],
 
     targets: [
 
@@ -34,7 +42,17 @@ let package = Package(
         .target(
             name: "PolyNetSDKWrapper",
             dependencies: [
-                "PolyNetSDK"
+                "PolyNetSDK",
+                .product(
+                    name: "WebRTC_iOS",
+                    package: "system73-webrtc-ios-spm",
+                    condition: .when(platforms: [.iOS])
+                ),
+                .product(
+                    name: "WebRTCtvOS",
+                    package: "system73-webrtc-tvos-spm",
+                    condition: .when(platforms: [.tvOS])
+                )
             ],
             path: "Sources/system73-sdk-ios-spm"
         )
