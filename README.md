@@ -1,143 +1,180 @@
-## System73 iOS SDK
+# System73 SDK for iOS & tvOS
 
-Supported platforms:
+Swift Package Manager distribution of the System73 PolyNet SDK.
 
--   iOS 13.0 and later
--   tvOS 13.0 and later
+**Current version:** 5.2.7
 
-macOS is currently not supported.
+## Supported Platforms
+
+- iOS 15.0 and later
+- tvOS 15.0 and later
+
+macOS is not supported.
 
 ## Requirements
 
--   Xcode 26.5 or newer
--   Swift 6.2 or newer
--   iOS deployment target 13.0 or greater
--   tvOS deployment target 13.0 or greater
+- Xcode 16.0 or newer
+- Swift 6.0 or newer
+- iOS deployment target 15.0 or later
+- tvOS deployment target 15.0 or later
 
-The SDK is compiled using Swift 6.3.2.
+The SDK binary is built and validated with Xcode 16.4.
 
-### Build Environment
+## Installation (Swift Package Manager)
 
-This release was built and validated using:
-- Xcode 26.5
-- Swift 6.3.2
+1. Open your project in Xcode.
+2. Go to **File → Add Package Dependencies…**
 
-## Installation
+   <p align="left">
+     <img src="assets/1.png" width="250" alt="Add Package Dependencies menu" />
+   </p>
 
-### Swift Package Manager (Recommended)
+3. Enter the repository URL in the search field:
 
-1.  Open your project in Xcode 
-2.  Go to ```File``` → ```Add Package Dependencies```
-    <p align="left">
-    <img src="assets/1.png" width="250" alt="SPM Installation Steps" />
-    </p>
-3.  Search for the System73 SDK using the repo's URL:
-4.  Enter the repository URL:
+   ```
+   https://github.com/System73/system73-sdk-ios-spm.git
+   ```
 
-```{=html}
-https://github.com/System73/system73-sdk-ios-spm.git
+   <p align="left">
+     <img src="assets/2.png" width="600" alt="Enter repository URL" />
+   </p>
+
+4. Set **Dependency Rule** to **Up to Next Major Version** (for example, from `5.2.7`) or choose **Exact Version** and select a specific release.
+5. Add the package to your app target.
+
+   <p align="left">
+     <img src="assets/addtarget.png" width="600" alt="Add package to target" />
+   </p>
+
+Xcode resolves and links all required components automatically.
+
+### Using Package.swift directly
+
+```swift
+dependencies: [
+    .package(
+        url: "https://github.com/System73/system73-sdk-ios-spm.git",
+        from: "5.2.7"
+    )
+],
+targets: [
+    .target(
+        name: "YourApp",
+        dependencies: [
+            .product(name: "PolyNetSDK", package: "system73-sdk-ios-spm")
+        ]
+    )
+]
 ```
-  <p align="left">
-   <img src="assets/2.png" width="600" alt="Repo Steps" />
-  </p>
-  
-5. Next, set the ```Dependency Rule``` to be ```Up to Next Major Version``` or choose ```Exact Version``` and select specific version.
-6.  Add the package to your app target
-  <p align="left">
-   <img src="assets/addtarget.png" width="600" alt="Add Steps" />
-  </p>
 
-Xcode will automatically resolve and link all required components.
+## Usage
 
-## Import
+### Import
 
-Import PolyNetSDK in your Swift file:
-
-``` swift
+```swift
 import PolyNetSDK
 ```
 
-## Initialization
+### Initialization
 
-Initialize the SDK during application startup.
+Initialize the SDK before starting playback, for example during view setup or app startup.
 
-Example:
-
-``` swift
+```swift
+import UIKit
 import PolyNetSDK
 
- class ViewController: UIViewController {
+final class ViewController: UIViewController {
 
     var polyNet: PolyNet?
 
     func initialize() {
-        // Add actual SDK initialization here if required
-        polyNet = try PolyNet(manifestUrl: manifestUrlTextField.text!, channelId: channelIdTextField.text!, apiKey: apiKeyTextField.text!, contentSteeringEndpoint: contentSteeringEndpointTextField.text ?? "")
+        do {
+            polyNet = try PolyNet(
+                manifestUrl: "<MANIFEST_URL>",
+                channelId: "<CHANNEL_ID>",
+                apiKey: "<API_KEY>",
+                contentSteeringEndpoint: "<CONTENT_STEERING_ENDPOINT>" // optional, pass "" if unused
+            )
+        } catch {
+            print("PolyNet initialization failed: \(error)")
+        }
     }
 }
 ```
 
 ## Included Components
 
-The package includes the following frameworks:
+The package provides:
 
--   PolyNetSDK (Core SDK)
--   WebRTC (Real-time communication)
--   SwiftProtobuf (Protocol serialization)
+- **PolyNetSDK**: core SDK (binary xcframework)
+- **WebRTC**: real-time communication, pulled in automatically as a platform-specific dependency:
+  - iOS: [`system73-webrtc-ios-spm`](https://github.com/System73/system73-webrtc-ios-spm) (1.0.1)
+  - tvOS: [`system73-webrtc-tvos-spm`](https://github.com/System73/system73-webrtc-tvos-spm) (1.0.1)
+- **SwiftProtobuf**: protocol serialization
 
-No additional setup is required. After importing the package, all SDK features and bundled frameworks
-become automatically available.
+No additional setup is required. After adding the package, all SDK features become available.
+
+> **Note:** The WebRTC packages are pinned to exact versions. If your app already depends on a different WebRTC package, you may see dependency conflicts.
 
 ## Architecture Support
 
-PolyNetSDK.xcframework supports:
+`PolyNetSDK.xcframework` includes the following slices:
 
-iOS: - arm64 (devices) - arm64 and x86_64 (simulator)
+**iOS**
+- arm64 (devices)
+- arm64 and x86_64 (simulator)
 
-tvOS: - arm64 (devices) - x86_64 (simulator)
+**tvOS**
+- arm64 (devices)
+- arm64 and x86_64 (simulator)
 
-Compatible with both Apple Silicon and Intel systems.
-
+Compatible with both Apple Silicon and Intel Macs.
 
 ## Troubleshooting
 
-### Module not found
+### No such module 'PolyNetSDK'
 
-If you see:
-
-No such module 'PolyNetPackage'
-
-Try:
-
--   Clean build folder (Shift + Command + K)
--   Restart Xcode
--   Reset package cache (File → Packages → Reset Package Caches)
+- Clean the build folder (**Shift + Command + K**)
+- Restart Xcode
+- Reset package caches (**File → Packages → Reset Package Caches**)
+- Confirm the package is added to the correct target under **Frameworks, Libraries, and Embedded Content**
 
 ### Package resolution failed
 
-Try:
+- Verify the repository URL
+- Check your internet connection
+- Delete DerivedData:
 
--   Verify repository URL
--   Check internet connection
--   Delete DerivedData:
+  ```bash
+  rm -rf ~/Library/Developer/Xcode/DerivedData
+  ```
 
-```{=html}
-https://github.com/System73/system73-sdk-ios-spm.git
-```
-    ~/Library/Developer/Xcode/DerivedData
+- Clear the SwiftPM cache:
+
+  ```bash
+  rm -rf ~/Library/Caches/org.swift.swiftpm
+  ```
+
+### Failed to download binary artifact / checksum does not match
+
+The SDK binary is hosted at `artifacts.s73cloud.com`, not on GitHub.
+
+- Make sure your network, VPN, firewall, or proxy allows access to `artifacts.s73cloud.com`
+- Reset package caches and resolve again
+- If the checksum error persists, contact support with the SDK version you are using
 
 ### Swift version compatibility error
 
-Ensure:
+- Make sure you are using Xcode 16.4 or newer
+- Make sure your project's Swift version is 6.0 or newer
 
--   Project uses supported Swift version
+## Support
 
-## Contact & Support
+For more information, visit [system73.com/docs](https://system73.com/docs) or [contact us](mailto:support@system73.com).
 
-Please visit [system73.com/docs](https://system73.com/docs)  for more information or [contact us](mailto:support@system73.com)
+For questions or bug reports, please [open a GitHub issue](https://github.com/System73/system73-sdk-ios-spm/issues).
 
-For questions:
-
-- 🐞 **Open a [GitHub Issue](https://github.com/System73/system73-sdk-ios-spm/issues)**
+---
 
 © 2026 **System73®**. All rights reserved.
+
