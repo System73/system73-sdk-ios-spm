@@ -1,12 +1,14 @@
-// swift-tools-version: 6.2
-// The swift-tools-version declares the minimum version of Swift required to build this package.
-
-// swift-tools-version: 6.2
+// swift-tools-version: 6.0
 
 import PackageDescription
 
 let package = Package(
     name: "system73-sdk-ios-spm",
+
+    platforms: [
+        .iOS(.v15),    
+        .tvOS(.v15)
+    ],
 
     products: [
         .library(
@@ -17,8 +19,12 @@ let package = Package(
 
     dependencies: [
         .package(
-            url: "https://github.com/apple/swift-protobuf.git",
-            from: "1.26.0"
+            url: "https://github.com/System73/system73-webrtc-ios-spm.git",
+            exact: "1.0.1"
+        ),
+        .package(
+            url: "https://github.com/System73/system73-webrtc-tvos-spm.git",
+            exact: "1.0.1"
         )
     ],
 
@@ -26,17 +32,26 @@ let package = Package(
 
         .binaryTarget(
             name: "PolyNetSDK",
-            url: "https://artifacts.s73cloud.com/repository/maven-s73-releases/s73-polynet-plat/polynet-apple-sdk/5.2.6/polynet-apple-sdk-5.2.6.zip",
-            checksum: "358dc74c337544ae0637b10fc2056b0eef12456c0cef0296829f8a4d05e911c9"
+            url: "https://artifacts.s73cloud.com/repository/maven-s73-releases/s73-polynet-plat/polynet-apple-sdk/5.2.7/polynet-apple-sdk-5.2.7.zip",
+            checksum: "9b317c5656d46ac15a56d1c59a5b1a76a4416137a7a946d82c05650b3200c210"
         ),
 
-            .target(
-                name: "PolyNetSDKWrapper",
-                dependencies: [
-                    "PolyNetSDK",
-                    .product(name: "SwiftProtobuf", package: "swift-protobuf")
-                ],
-                path: "Sources/system73-sdk-ios-spm"
-            )
+        .target(
+            name: "PolyNetSDKWrapper",
+            dependencies: [
+                "PolyNetSDK",
+                .product(
+                    name: "WebRTC_iOS",
+                    package: "system73-webrtc-ios-spm",
+                    condition: .when(platforms: [.iOS])
+                ),
+                .product(
+                    name: "WebRTCtvOS",
+                    package: "system73-webrtc-tvos-spm",
+                    condition: .when(platforms: [.tvOS])
+                )
+            ],
+            path: "Sources/system73-sdk-ios-spm"
+        )
     ]
 )
