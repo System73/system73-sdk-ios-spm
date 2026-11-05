@@ -6,7 +6,7 @@ let package = Package(
     name: "system73-sdk-ios-spm",
 
     platforms: [
-        .iOS(.v15),     // change to your real minimum versions
+        .iOS(.v15),    
         .tvOS(.v15)
     ],
 
@@ -26,9 +26,6 @@ let package = Package(
             url: "https://github.com/System73/system73-webrtc-tvos-spm.git",
             exact: "1.0.1"
         )
-
-        // SwiftProtobuf is intentionally excluded.
-        // It will be managed externally by the client application.
     ],
 
     targets: [
