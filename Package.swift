@@ -1,7 +1,5 @@
-// swift-tools-version: 6.2
-// The swift-tools-version declares the minimum version of Swift required to build this package.
 
-// swift-tools-version: 6.2
+ // swift-tools-version: 6.0
 
 import PackageDescription
 
@@ -15,12 +13,15 @@ let package = Package(
         )
     ],
 
-    dependencies: [
-        .package(
-            url: "https://github.com/apple/swift-protobuf.git",
-            from: "1.26.0"
-        )
-    ],
+    // SwiftProtobuf is intentionally excluded.
+    // It will be managed externally by the client application.
+    //
+    // dependencies: [
+    //     .package(
+    //         url: "https://github.com/apple/swift-protobuf.git",
+    //         from: "1.26.0"
+    //     )
+    // ],
 
     targets: [
 
@@ -30,13 +31,12 @@ let package = Package(
             checksum: "358dc74c337544ae0637b10fc2056b0eef12456c0cef0296829f8a4d05e911c9"
         ),
 
-            .target(
-                name: "PolyNetSDKWrapper",
-                dependencies: [
-                    "PolyNetSDK",
-                    .product(name: "SwiftProtobuf", package: "swift-protobuf")
-                ],
-                path: "Sources/system73-sdk-ios-spm"
-            )
+        .target(
+            name: "PolyNetSDKWrapper",
+            dependencies: [
+                "PolyNetSDK"
+            ],
+            path: "Sources/system73-sdk-ios-spm"
+        )
     ]
 )
