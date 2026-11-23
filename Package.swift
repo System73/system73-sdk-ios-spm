@@ -20,11 +20,11 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/System73/system73-webrtc-ios-spm.git",
-            exact: "1.0.1"
+            exact: "1.0.2"
         ),
         .package(
             url: "https://github.com/System73/system73-webrtc-tvos-spm.git",
-            exact: "1.0.1"
+            exact: "1.0.2"
         )
     ],
 
@@ -32,8 +32,8 @@ let package = Package(
 
         .binaryTarget(
             name: "PolyNetSDK",
-            url: "https://artifacts.s73cloud.com/repository/maven-s73-releases/s73-polynet-plat/polynet-apple-sdk/5.2.7/polynet-apple-sdk-5.2.7.zip",
-            checksum: "9b317c5656d46ac15a56d1c59a5b1a76a4416137a7a946d82c05650b3200c210"
+            url: "https://artifacts.s73cloud.com/repository/maven-s73-releases/s73-polynet-plat/polynet-apple-sdk/5.2.8/polynet-apple-sdk-5.2.8.zip",
+            checksum: "d892e830d46063fc61cc7448f107d703438973a3089adda3ebea2b77511e2c3a"
         ),
 
         .target(

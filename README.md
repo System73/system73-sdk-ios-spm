@@ -2,7 +2,7 @@
 
 Swift Package Manager distribution of the System73 PolyNet SDK.
 
-**Current version:** 5.2.7
+**Current version:** 5.2.8
 
 ## Supported Platforms
 
@@ -13,12 +13,14 @@ macOS is not supported.
 
 ## Requirements
 
-- Xcode 16.0 or newer
-- Swift 6.0 or newer
+- Xcode 16.4 or newer
+- Swift 6.1 or newer (included with Xcode 16.4)
 - iOS deployment target 15.0 or later
 - tvOS deployment target 15.0 or later
 
 The SDK binary is built and validated with Xcode 16.4.
+
+> **Note:** Swift Package Manager does not allow an app to add a package that requires a higher deployment target than the app itself. If your app supports an iOS version earlier than 15.0, you must raise its minimum to iOS 15.0 to use this package.
 
 ## Installation (Swift Package Manager)
 
@@ -39,7 +41,7 @@ The SDK binary is built and validated with Xcode 16.4.
      <img src="assets/2.png" width="600" alt="Enter repository URL" />
    </p>
 
-4. Set **Dependency Rule** to **Up to Next Major Version** (for example, from `5.2.7`) or choose **Exact Version** and select a specific release.
+4. Set **Dependency Rule** to **Up to Next Major Version** (for example, from `5.2.8`) or choose **Exact Version** and select a specific release.
 5. Add the package to your app target.
 
    <p align="left">
@@ -54,7 +56,7 @@ Xcode resolves and links all required components automatically.
 dependencies: [
     .package(
         url: "https://github.com/System73/system73-sdk-ios-spm.git",
-        from: "5.2.7"
+        from: "5.2.8"
     )
 ],
 targets: [
@@ -108,23 +110,35 @@ The package provides:
 
 - **PolyNetSDK**: core SDK (binary xcframework)
 - **WebRTC**: real-time communication, pulled in automatically as a platform-specific dependency:
-  - iOS: [`system73-webrtc-ios-spm`](https://github.com/System73/system73-webrtc-ios-spm) (1.0.1)
-  - tvOS: [`system73-webrtc-tvos-spm`](https://github.com/System73/system73-webrtc-tvos-spm) (1.0.1)
-- **SwiftProtobuf**: protocol serialization
+  - iOS: [`system73-webrtc-ios-spm`](https://github.com/System73/system73-webrtc-ios-spm) (1.0.2)
+  - tvOS: [`system73-webrtc-tvos-spm`](https://github.com/System73/system73-webrtc-tvos-spm) (1.0.2)
+- **SwiftProtobuf** (1.38.0): protocol serialization, included inside the SDK binary. You do **not** need to add `swift-protobuf` to your app.
 
 No additional setup is required. After adding the package, all SDK features become available.
 
 > **Note:** The WebRTC packages are pinned to exact versions. If your app already depends on a different WebRTC package, you may see dependency conflicts.
+
+## Privacy
+
+`PolyNetSDK` includes a privacy manifest (`PrivacyInfo.xcprivacy`) in each framework slice.
+
+## Known Notes
+
+### Duplicate class warnings
+
+SwiftProtobuf is compiled into the SDK. If your app also links its own copy of SwiftProtobuf, the console may print messages such as `Class ... is implemented in both ...`. In integrator testing these were console warnings only and did not cause crashes. If you see crashes or unexpected behavior, please contact support with the full console output.
 
 ## Architecture Support
 
 `PolyNetSDK.xcframework` includes the following slices:
 
 **iOS**
+
 - arm64 (devices)
 - arm64 and x86_64 (simulator)
 
 **tvOS**
+
 - arm64 (devices)
 - arm64 and x86_64 (simulator)
 
@@ -163,6 +177,10 @@ The SDK binary is hosted at `artifacts.s73cloud.com`, not on GitHub.
 - Reset package caches and resolve again
 - If the checksum error persists, contact support with the SDK version you are using
 
+### Unable to find module dependency: 'SwiftProtobuf'
+
+This error occurred with version 5.2.7. Update to version 5.2.8 or later. You do not need to add `swift-protobuf` to your app.
+
 ### Swift version compatibility error
 
 - Make sure you are using Xcode 16.4 or newer
@@ -177,4 +195,3 @@ For questions or bug reports, please [open a GitHub issue](https://github.com/Sy
 ---
 
 © 2026 **System73®**. All rights reserved.
-
